@@ -14,7 +14,12 @@ export class EmployeeComponent implements OnInit {
 
   ngOnInit(): void {
     this.sub = this.dataService.getAllEmployees().subscribe({
-      next: (employees) => {},
+      next: (employees: Employee[]) => {},
+      error: (err) => (this.errorMessage = err),
+    });
+
+    this.sub = this.dataService.getDepartments().subscribe({
+      next: (departments: any) => {},
       error: (err) => (this.errorMessage = err),
     });
   }

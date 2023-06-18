@@ -12,6 +12,7 @@ import { Employee } from '../employee';
 })
 export class DataService {
   private employeeUrl = 'api/v2/employees';
+  private departmentUrl = 'api/v2/departments';
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -33,6 +34,13 @@ export class DataService {
       }),
       catchError(this.handleError)
     );
+  }
+
+  //Method called to get list an array of Departments
+  getDepartments() {
+    return this.http
+      .get<Employee[]>(this.departmentUrl, this.httpOptions)
+      .pipe(catchError(this.handleError));
   }
 
   private handleError(err: HttpErrorResponse): Observable<never> {
