@@ -39,7 +39,7 @@ export class EmployeeComponent implements OnInit {
     });
 
     // calling service to get departments
-    this.sub = this.dataService.getDepartments().subscribe({
+    this.sub = this.dataService.getAllDepartments().subscribe({
       next: (departments: any) => {
         this.departments = departments!;
       },

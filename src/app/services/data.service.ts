@@ -37,7 +37,7 @@ export class DataService {
   }
 
   //Method called to get list an array of Departments
-  getDepartments() {
+  getAllDepartments() {
     return this.http
       .get<Employee[]>(this.departmentUrl, this.httpOptions)
       .pipe(catchError(this.handleError));
