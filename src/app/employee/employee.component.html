@@ -1,1 +1,50 @@
-<p>employee works!</p>
+<div class="container">
+  <div class="header">
+    <p>Employees</p>
+
+    <mat-form-field>
+      <mat-label>All Departments</mat-label>
+      <mat-select>
+        <mat-option
+          *ngFor="let department of departments"
+          (click)="onFilterChange(department)"
+        >
+          {{ department }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="dashboard">
+    <mat-card class="example-card" *ngFor="let employee of filteredEmployees()">
+      <!-- <mat-card class="example-card" *ngFor="let employee of this.pageSlice()"> -->
+      <div class="row">
+        <div class="column col-25">
+          <img src="{{ employee.avatar }}" alt="Employee Image" />
+        </div>
+        <div class="column">
+          <mat-card-title>
+            {{ employee.firstName }} {{ employee.lastName }}
+          </mat-card-title>
+          <mat-card-subtitle>
+            {{ employee.position }}
+          </mat-card-subtitle>
+          <div class="row">
+            <mat-chip class="primary" selected *ngIf="employee.married"
+              >Married</mat-chip
+            >
+            <mat-chip class="primary" selected>{{
+              employee.department
+            }}</mat-chip>
+            <mat-chip
+              class="warn"
+              selected
+              *ngIf="employee.dateOfHire < '2020-01-01'"
+              >VIP</mat-chip
+            >
+          </div>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</div>
