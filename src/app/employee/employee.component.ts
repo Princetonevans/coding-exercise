@@ -1,7 +1,8 @@
 import { Component, OnInit, Signal, computed, signal } from '@angular/core';
 import { Employee } from '../employee';
 import { DataService } from '../services/data.service';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { combineLatest } from 'rxjs';
 @Component({
   selector: 'sample-employee',
   templateUrl: './employee.component.html',
@@ -18,6 +19,24 @@ export class EmployeeComponent implements OnInit {
 
   constructor(private dataService: DataService) {}
 
+  ngOnInit(): void {
+    //Subscribing to two observables
+    this.sub = combineLatest([
+      this.dataService.getAllEmployees(),
+      this.dataService.getAllDepartments(),
+    ]).subscribe({
+      next: (res) => {
+        this.employees = res[0];
+        this.departments = res[1];
+        this.filteredEmployees = computed(() =>
+          this.performFilter(this.listFilter())
+        );
+      },
+      error: (err) => (this.errorMessage = err),
+    });
+  }
+
+  // Transforming string to lowercase and filtering
   performFilter(filterBy: string): Employee[] {
     filterBy = filterBy.toLocaleLowerCase();
     return this.employees.filter((employee: Employee) =>
@@ -25,29 +44,8 @@ export class EmployeeComponent implements OnInit {
     );
   }
 
-  ngOnInit(): void {
-    // calling service to get employees
-    this.sub = this.dataService.getAllEmployees().subscribe({
-      next: (employees) => {
-        this.employees = employees;
-        //Initializing the data
-        this.filteredEmployees = computed(() =>
-          this.performFilter(this.listFilter())
-        );
-      },
-      error: (err) => (this.errorMessage = err),
-    });
-
-    // calling service to get departments
-    this.sub = this.dataService.getAllDepartments().subscribe({
-      next: (departments: any) => {
-        this.departments = departments!;
-      },
-      error: (err) => (this.errorMessage = err),
-    });
-  }
-
   onFilterChange(value: string) {
+    // Updating array
     this.listFilter.set(value);
   }
 
