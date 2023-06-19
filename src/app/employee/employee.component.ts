@@ -50,4 +50,9 @@ export class EmployeeComponent implements OnInit {
   onFilterChange(value: string) {
     this.listFilter.set(value);
   }
+
+  ngOnDestroy(): void {
+    // Unsubscribing to prevent memory leaks
+    this.sub.unsubscribe();
+  }
 }
