@@ -20,7 +20,6 @@ export class EmployeeComponent implements OnInit {
 
   performFilter(filterBy: string): Employee[] {
     filterBy = filterBy.toLocaleLowerCase();
-    console.log(filterBy);
     return this.employees.filter((employee: Employee) =>
       employee.department.toLocaleLowerCase().includes(filterBy)
     );
