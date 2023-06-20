@@ -1,4 +1,4 @@
-import { Component, OnInit, Signal, computed, signal } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Employee } from '../employee';
 import { DataService } from '../services/data.service';
 import { Subscription, combineLatest } from 'rxjs';
@@ -16,7 +16,6 @@ export class EmployeeComponent implements OnInit {
 
   //Pagination vaiables
   pageEvent: PageEvent;
-  datasource: null;
   pageIndex: number = 1;
   pageSize: number = 6;
   pageSizeOptions: any = [6, 8, 12];
